@@ -2,6 +2,8 @@
 0. clone repo
 1. Install poetry
 2. Install dependencies: ``poetry install``
+3. enable pre-commit hooks for pylint and code reformat ``poetry run autohooks activate --mode poetry``
+
 
 ## check in
 1. ``poetry run pytest``

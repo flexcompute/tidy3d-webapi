@@ -6,6 +6,9 @@ authors = ["An Li <kidylee@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7.2"
+toml = "^0.10.2"
+pydantic = "^1.10.2"
+requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
@@ -14,6 +17,7 @@ autohooks-plugin-black = "^22.8.1"
 autohooks-plugin-pylint = "^22.8.1"
 autohooks-plugin-isort = "^22.8.0"
 pylint = "^2.15.0"
+pytest-ordering = "^0.6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -39,3 +43,7 @@ pre-commit = ["autohooks.plugins.black", "autohooks.plugins.isort", "autohooks.p
 
 [tool.autohooks.plugins.pylint]
 arguments = ["--rcfile=.pylintrc"]
+
+
+[tool.poetry.scripts]
+tidy3d = "tidy3d_webapi.cli:tidy3d_cli"
