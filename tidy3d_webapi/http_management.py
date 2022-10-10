@@ -65,7 +65,9 @@ def http_interceptor(func):
             result = resp.json()
             return result.get("data")
 
-        raise Exception(f"Unexpected response: {resp.status_code}")
+        raise Exception(
+            f"Unexpected response, http status code: {resp.status_code}, response text: {resp.text}"
+        )
 
     return wrapper
 
