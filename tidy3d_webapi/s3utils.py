@@ -205,6 +205,7 @@ def download_file(resource_id: str, remote_filename: str, to_file: str = None):
     """
     token = get_s3_sts_token(resource_id, remote_filename)
     client = token.get_client()
+
     meta_data = client.head_object(Bucket=token.get_bucket(), Key=token.get_s3_key())
     with _get_progress(_S3Action.DOWNLOADING) as progress:
         progress.start()
