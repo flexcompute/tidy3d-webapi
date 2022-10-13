@@ -11,12 +11,16 @@ import toml
 from .environment import Env
 from .version import __version__
 
+SIMCLOUD_APIKEY = "SIMCLOUD_APIKEY"
+
 
 def api_key():
     """
     Get the api key for the current environment.
     :return:
     """
+    if os.environ.get(SIMCLOUD_APIKEY):
+        return os.environ.get(SIMCLOUD_APIKEY)
     if os.path.exists(f"{expanduser('~')}/.tidy3d/config"):
         with open(f"{expanduser('~')}/.tidy3d/config", "r", encoding="utf-8") as config_file:
             config = toml.loads(config_file.read())
@@ -55,19 +59,14 @@ def http_interceptor(func):
 
         # Extend some capabilities of func
         resp = func(*args, **kwargs)
-        if resp.status_code == 401:
-            raise Exception("Unauthorized.")
 
-        if resp.status_code == 404:
+        if resp.raise_for_status():
+            raise resp.raise_for_status
+
+        if not resp.text:
             return None
-
-        if resp.status_code == 200:
-            result = resp.json()
-            return result.get("data")
-
-        raise Exception(
-            f"Unexpected response, http status code: {resp.status_code}, response text: {resp.text}"
-        )
+        result = resp.json()
+        return result.get("data") if "data" in result else result
 
     return wrapper
 
