@@ -1,5 +1,5 @@
+from tidy3d_webapi import Tidy3DFolder
 from tidy3d_webapi.environment import Env
-from tidy3d_webapi.types import Tidy3DFolder
 
 Env.dev.active()
 
@@ -15,6 +15,6 @@ def test_get_folder():
 
 
 def test_create_and_remove_folder():
-    resp = Tidy3DFolder.create("test folder")
+    resp = Tidy3DFolder.create("test folder2")
     assert resp is not None
     resp.remove()

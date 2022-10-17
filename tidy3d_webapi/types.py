@@ -11,12 +11,7 @@ from tidy3d.version import __version__
 
 from tidy3d_webapi.cache import FOLDER_CACHE
 from tidy3d_webapi.http_management import http
-from tidy3d_webapi.s3utils import (
-    download_file,
-    get_s3_sts_token,
-    upload_file,
-    upload_string,
-)
+from tidy3d_webapi.s3_utils import download_file, upload_file, upload_string
 
 SIMULATION_JSON = "simulation.json"
 
@@ -167,14 +162,7 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
         :param to_file:
         :return:
         """
-        if self.task_id:
-            token = get_s3_sts_token(self.task_id, SIMULATION_JSON)
-            client = token.get_client()
-            try:
-                client.head_object(Bucket=token.get_bucket(), Key=token.get_s3_key())
-                download_file(self.task_id, SIMULATION_JSON, to_file=to_file)
-            except client.exceptions.ClientError:
-                print("Simulation.json not found.")
+        download_file(self.task_id, SIMULATION_JSON, to_file=to_file)
 
     def _upload_file(self, local_file: str, remote_filename: str):
         """
