@@ -100,14 +100,17 @@ class HttpSessionManager:
         return self.session.post(Env.current.get_real_url(path), json=json, auth=api_key_auth)
 
     @http_interceptor
-    def put(self, path: str, json):
+    def put(self, path: str, json=None, files=None):
         """
         Update the resource.
+        :param files:
         :param path:
         :param json:
         :return:
         """
-        return self.session.put(Env.current.get_real_url(path), data=json, auth=api_key_auth)
+        return self.session.put(
+            Env.current.get_real_url(path), data=json, auth=api_key_auth, files=files
+        )
 
     @http_interceptor
     def delete(self, path: str):
