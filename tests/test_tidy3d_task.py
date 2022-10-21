@@ -4,15 +4,10 @@ import tempfile
 import pytest
 from requests import HTTPError
 
-from tidy3d_webapi import __version__
 from tidy3d_webapi.environment import Env
 from tidy3d_webapi.types import Tidy3DFolder, Tidy3DTask
 
 Env.dev.active()
-
-
-def test_version():
-    assert __version__ == "0.1.0"
 
 
 def test_list_tasks():

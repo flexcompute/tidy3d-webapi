@@ -13,7 +13,7 @@ def test_material_fitter():
     task = MaterialFitterTask.create(fitter, FitterOptions())
 
     retry = 0
-    max_retry = 6
+    max_retry = 12
     waiting_sec = 10
 
     while retry < max_retry:
