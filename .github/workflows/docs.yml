@@ -18,7 +18,7 @@ jobs:
       with:
         python-version: '3.9'
     - run: pip install "docutils==0.17.1" "sphinxcontrib-openapi==0.7.0" "mistune==0.8.4" "sphinx-rtd-theme==1.0.0"
-    - run: sphinx-build -b html docs/source/ docs/build/html
+    - run: sphinx-build -b html docs/source/ docs/build/
     - name: Deploy to GitHub Pages
       id: deployment
       uses: JamesIves/github-pages-deploy-action@v4
