@@ -19,10 +19,9 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-        cache: 'poetry'
-    - name: Install dependencies
-      run: poetry install
-    - run: poetry shell; sphinx-build -b html docs/source/ docs/build/html
+        cache: 'pip'
+    - run: pip install "docutils==0.17.1" "sphinxcontrib-openapi==0.7.0" "mistune==0.8.4" "sphinx-rtd-theme==1.0.0"
+    - run: sphinx-build -b html docs/source/ docs/build/html
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v1
