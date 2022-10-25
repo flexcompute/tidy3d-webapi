@@ -1,0 +1,3113 @@
+---
+openapi: 3.0.1
+info:
+  title: SimCloud REST API
+  termsOfService: https://www.flexcompute.com/term_of_use/
+  contact:
+    name: Web Api Team
+    url: https://www.flexcompute.com
+    email: webapi@flexcompute.com
+  license:
+    name: Copyright © 2022 Flexcompute, inc.
+    url: https://flexcompute.com
+servers:
+- url: http://tidy3d-api.dev-simulation.cloud
+  description: Generated server url
+security:
+- Bearer: []
+paths:
+  "/tidy3d/tasks/status":
+    put:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: updateTaskErrorStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskUpdateReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+  "/tidy3d/tasks/move":
+    put:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: moveTasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3dTaskBatchMoveReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseVoid"
+  "/tidy3d/projects/{projectId}":
+    get:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: getUserProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tidy3DUserProjectInfo"
+    put:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: updateUserProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DUserProjectUpdateReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tidy3DUserProjectInfo"
+    delete:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: deleteProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  "/tidy3d/projects/{projectId}/tasks/{taskId}":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: getTidy3DTask_1
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTask"
+    put:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: updateTask
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SimCloudTidy3DTask"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTask"
+    delete:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: deleteTask_1
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTask"
+  "/tidy3d/projects/{projectId}/tasks/{taskId}/snapshot":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: querySnapshot
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskSnapshot"
+    put:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: updateSnapshot
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskSnapshotReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tidy3DTaskSnapshotResp"
+  "/tidy3d/libraries":
+    get:
+      tags:
+      - tidy-3-d-library-controller
+      operationId: listLibrary
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListLibraryResp"
+    put:
+      tags:
+      - tidy-3-d-library-controller
+      operationId: updateLibrary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/LibraryUpdateReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+    post:
+      tags:
+      - tidy-3-d-library-controller
+      operationId: addLibrary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/LibraryReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseLibraryModel"
+  "/fdtd/model/{modelId}/task/{taskId}":
+    put:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: createTask
+      parameters:
+      - name: modelId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TaskModel"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseTaskModel"
+      deprecated: true
+  "/tidy3d/tenant/users":
+    get:
+      tags:
+      - tidy-3-d-tenant-controller
+      operationId: listTenantUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListTenantUsersDetail"
+    post:
+      tags:
+      - tidy-3-d-tenant-controller
+      operationId: addUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserTenantAddReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseUserTenantAddResp"
+    delete:
+      tags:
+      - tidy-3-d-tenant-controller
+      operationId: removeUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserTenantRemoveReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseUserTenantRemoveResp"
+  "/tidy3d/tasks/{taskId}/submit":
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: submit
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskSubmitReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskDetail"
+  "/tidy3d/tasks/{taskId}/metadata":
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: metadata
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskSubmitReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tidy3dMetadata"
+  "/tidy3d/tasks/upgrade":
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: upgradeTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DSimulationUpgradeReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimulationUpgradeResp"
+  "/tidy3d/share":
+    post:
+      tags:
+      - tidy-3-d-share-controller
+      operationId: addPublicResourceShare
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PublicResourceShareReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+    delete:
+      tags:
+      - tidy-3-d-share-controller
+      operationId: deletePublicResourceShare
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PublicResourceShareReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+  "/tidy3d/restore":
+    post:
+      tags:
+      - tidy-3-d-archive-controller
+      operationId: restore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ArchiveViewRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseInteger"
+  "/tidy3d/projects":
+    get:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: getUserProjects
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Tidy3DUserProjectInfo"
+    post:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: createUserProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DUserProjectReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tidy3DUserProjectInfo"
+    delete:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: deleteProjects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DUserProjectBatchDelReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tidy3DUserProjectBatchDelResp"
+  "/tidy3d/projects/{projectId}/tasks":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: listTidy3DTasks
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/SimCloudTidy3DTaskRes"
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: createTidy3DTask
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskCreateReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTask"
+  "/tidy3d/projects/{projectId}/tasks/{taskId}/submit":
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: submitTidy3D
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskSubmitReq"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskDetail"
+  "/tidy3d/projects/{projectId}/tasks/{taskId}/run":
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: runSimulation
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskSnapshotReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskRunResp"
+  "/tidy3d/projects/{projectId}/tasks/snapshot":
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: saveSnapshot
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DTaskSnapshotReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTask"
+  "/tidy3d/projects/tasks/copy":
+    post:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: duplicateTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3DSimulationReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Tidy3DSimulationRes"
+  "/tidy3d/fitter/save":
+    post:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MaterialFitterSaveReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+  "/tidy3d/fitter/fit":
+    post:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: fit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MaterialFitterFitReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseMaterialFitterResp"
+  "/tidy3d/fitter/callback":
+    post:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: delFitter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MaterialFitterCallbackReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+  "/tidy3d/batchRestore":
+    post:
+      tags:
+      - tidy-3-d-archive-controller
+      operationId: batchRestore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BatchOperationRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBatchOperationResponse"
+  "/tidy3d/batchArchive":
+    post:
+      tags:
+      - tidy-3-d-archive-controller
+      operationId: batchArchive
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BatchOperationRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBatchOperationResponse"
+  "/tidy3d/archive":
+    post:
+      tags:
+      - tidy-3-d-archive-controller
+      operationId: archive
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ArchiveViewRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseInteger"
+  "/fdtd/task":
+    post:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: createTaskNew
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TaskModel"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseTaskModel"
+      deprecated: true
+  "/fdtd/tasks":
+    get:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: listUserTasks
+      parameters:
+      - name: folderId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListTaskModel"
+      deprecated: true
+    post:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: getTasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TaskListRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListTaskModel"
+      deprecated: true
+  "/fdtd/model":
+    post:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: createTask_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FDTDFolder"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseFDTDFolder"
+      deprecated: true
+  "/fdtd/model/{modelId}/task":
+    post:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: createTask_2
+      parameters:
+      - name: modelId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TaskModel"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseTaskModel"
+      deprecated: true
+  "/fdtd/account/redeem":
+    post:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: redeem
+      parameters:
+      - name: code
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseUserModel"
+      deprecated: true
+  "/apikey":
+    get:
+      tags:
+      - api-key-controller
+      operationId: getAPIKey
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseString"
+    post:
+      tags:
+      - api-key-controller
+      operationId: newAPIkey
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseString"
+  "/tidy3d/{uploadPath}/signedUrl":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: getSignedUrl
+      parameters:
+      - name: uploadPath
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: filepath
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: method
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseString"
+  "/tidy3d/{uploadPath}/signedInfo":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: getSignedInfo
+      parameters:
+      - name: uploadPath
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: filepath
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: method
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseFileInfo"
+  "/tidy3d/version/solver":
+    get:
+      tags:
+      - tidy-3-d-common-controller
+      operationId: getSolverVersion
+      parameters:
+      - name: protocolVersion
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: solverVersion
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseSolverVersion"
+  "/tidy3d/user":
+    get:
+      tags:
+      - tidy-3-d-account-controller
+      operationId: getUserInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseUserInfoResp"
+  "/tidy3d/tenant/matchingUsers":
+    get:
+      tags:
+      - tidy-3-d-tenant-controller
+      operationId: getUserByDomain
+      parameters:
+      - name: key
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListMatchingUserInfo"
+  "/tidy3d/tasks":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: query
+      parameters:
+      - name: taskId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: taskName
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListSimCloudTidy3DTaskRes"
+    delete:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: batchDelete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Tidy3dTaskBatchDeleteReq"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseVoid"
+  "/tidy3d/tasks/{taskId}/file":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: buildRemoteFileAccess
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: filename
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseRemoteFileTransferResponse"
+  "/tidy3d/tasks/{taskId}/detail":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: getTidy3DTask
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskDetailResp"
+  "/tidy3d/simulation/sample.json":
+    get:
+      tags:
+      - tidy-3-d-simulation-controller
+      operationId: getSample
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/tidy3d/s3upload/grant":
+    get:
+      tags:
+      - tidy-3-d-resource-controller
+      operationId: grant
+      parameters:
+      - name: resourceId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseRemoteFileTransferResponse"
+  "/tidy3d/resource/user":
+    get:
+      tags:
+      - tidy-3-d-resource-controller
+      operationId: getUserResource
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseUserResource"
+  "/tidy3d/resource/grant":
+    get:
+      tags:
+      - tidy-3-d-resource-controller
+      operationId: grantResource
+      parameters:
+      - name: resourceId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseRemoteFileTransferResponse"
+  "/tidy3d/project":
+    get:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: findProjectByName
+      parameters:
+      - name: projectName
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseTidy3dQueryByProjectNameResp"
+  "/tidy3d/projects/{projectId}/tasks/{taskId}/taskDetail":
+    get:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: getTidy3DTaskDetail
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskDetailResp"
+  "/tidy3d/projects/key":
+    get:
+      tags:
+      - tidy-3-d-project-controller
+      operationId: findProjectByKey
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListTidy3dQueryByKeyResp"
+  "/tidy3d/libraries/{id}":
+    get:
+      tags:
+      - tidy-3-d-library-controller
+      operationId: getLibrary
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseLibraryResp"
+    delete:
+      tags:
+      - tidy-3-d-library-controller
+      operationId: delLibrary
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+  "/tidy3d/fitter":
+    get:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: listFitter
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListMaterialFitterResp"
+  "/tidy3d/fitter/{uploadPath}/signedUrl":
+    get:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: getSignedInfo_1
+      parameters:
+      - name: uploadPath
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: filepath
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: method
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseString"
+  "/tidy3d/fitter/{id}":
+    get:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: getFitter
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseMaterialFitterResp"
+    delete:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: delFitter_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseBoolean"
+  "/tidy3d/fitter/last":
+    get:
+      tags:
+      - tidy-3-d-material-fitter-controller
+      operationId: getLastStatusIsNewFitter
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseMaterialFitterResp"
+  "/tidy3d/account":
+    get:
+      tags:
+      - tidy-3-d-account-controller
+      operationId: getAccountInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseAccountInfo"
+  "/tidy3d/account/tenant":
+    get:
+      tags:
+      - tidy-3-d-account-controller
+      operationId: getTenantAccountInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseAccountInfo"
+  "/task/{taskId}/signedUrl":
+    get:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: getSignedUrl_1
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: filepath
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: method
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseString"
+      deprecated: true
+  "/solver/task/{taskId}/visualize":
+    get:
+      tags:
+      - tidy-3-d-solver-task-controller
+      operationId: getItemVisualizations
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListString"
+  "/public/tidy3d/share/auth":
+    get:
+      tags:
+      - tidy-3-d-public-resource-controller
+      operationId: getSharePublicResourceAuth
+      parameters:
+      - name: resourceId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponsePublicResourceAuth"
+  "/public/tidy3d/resources":
+    get:
+      tags:
+      - tidy-3-d-public-resource-controller
+      operationId: listPublicResource
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListPagePublicResourceInfo"
+  "/public/tidy3d/resources/{resourceId}/taskDetail":
+    get:
+      tags:
+      - tidy-3-d-public-resource-controller
+      operationId: getPublicResourceDetail
+      parameters:
+      - name: resourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskDetailResp"
+  "/public/tidy3d/resources/{resourceId}/snapshot":
+    get:
+      tags:
+      - tidy-3-d-public-resource-controller
+      operationId: querySnapshot_1
+      parameters:
+      - name: resourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTaskSnapshot"
+  "/info":
+    get:
+      tags:
+      - tidy-3-d-info-controller
+      operationId: info
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/health":
+    get:
+      tags:
+      - tidy-3-d-info-controller
+      operationId: checkHealth
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/fdtd/task/{taskId}":
+    get:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: getModelTask
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseTaskModel"
+      deprecated: true
+    delete:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: delTask
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseTaskModel"
+      deprecated: true
+  "/fdtd/models":
+    get:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: listUserModels
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListFDTDFolder"
+      deprecated: true
+  "/fdtd/model/{modelId}":
+    get:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: getProject
+      parameters:
+      - name: modelId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseFDTDFolder"
+      deprecated: true
+    delete:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: delModel
+      parameters:
+      - name: modelId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseFDTDFolder"
+      deprecated: true
+  "/fdtd/folders":
+    get:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: listUserFolders
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseListFDTDFolder"
+      deprecated: true
+  "/fdtd/account":
+    get:
+      tags:
+      - tidy-3-dfdtd-service-controller
+      operationId: getAccountInfo_1
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/RestDataResponseAccountInfo"
+      deprecated: true
+  "/tidy3d/tasks/{taskId}":
+    delete:
+      tags:
+      - tidy-3-d-task-controller
+      operationId: deleteTask
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SimCloudTidy3DTask"
+components:
+  schemas:
+    Tidy3DTaskUpdateReq:
+      required:
+      - statusToError
+      - taskId
+      type: object
+      properties:
+        taskId:
+          type: string
+        statusToError:
+          type: string
+    RestDataResponseBoolean:
+      type: object
+      properties:
+        data:
+          type: boolean
+    Tidy3dTaskBatchMoveReq:
+      type: object
+      properties:
+        targetProjectId:
+          type: string
+        tasks:
+          type: array
+          items:
+            type: string
+    RestDataResponseVoid:
+      type: object
+      properties:
+        data:
+          type: object
+    Tidy3DUserProjectUpdateReq:
+      type: object
+      properties:
+        projectName:
+          type: string
+        liked:
+          type: boolean
+        pinned:
+          type: boolean
+    Tidy3DUserProjectInfo:
+      type: object
+      properties:
+        personName:
+          type: string
+        projectName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        projectId:
+          type: string
+        liked:
+          type: boolean
+        pinned:
+          type: boolean
+        deleted:
+          type: boolean
+        userId:
+          type: string
+    SimCloudTidy3DTask:
+      type: object
+      properties:
+        userId:
+          type: string
+        projectId:
+          type: string
+        taskId:
+          type: string
+        taskName:
+          type: string
+        status:
+          type: string
+          deprecated: true
+        solverVersion:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        createdFrom:
+          type: string
+        uploadPath:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedFrom:
+          type: string
+        callbackUrl:
+          type: string
+        workerGroup:
+          type: string
+        statusToError:
+          type: string
+    Tidy3DTaskSnapshotReq:
+      type: object
+      properties:
+        protocolVersion:
+          type: string
+        taskName:
+          type: string
+        metadata:
+          type: string
+        simulation:
+          type: string
+    Tidy3DTaskSnapshotResp:
+      type: object
+      properties:
+        projectId:
+          type: string
+        taskId:
+          type: string
+        metadata:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+    LibraryUpdateReq:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        mediumType:
+          type: string
+        jsonInput:
+          type: string
+    TaskModel:
+      type: object
+      properties:
+        execCount:
+          type: integer
+          format: int32
+        s3Storage:
+          type: integer
+          format: int64
+        userEmail:
+          type: string
+        coreDuration:
+          type: number
+          format: double
+        rankCount:
+          type: integer
+          format: int32
+        submitTime:
+          type: string
+          format: date-time
+        updateTime:
+          type: string
+          format: date-time
+        status:
+          type: string
+        taskParam:
+          type: string
+        objectId:
+          type: string
+        folderId:
+          type: string
+        solverVersion:
+          type: string
+        worker:
+          type: string
+        userId:
+          type: string
+        taskType:
+          type: string
+        objectType:
+          type: string
+        taskName:
+          type: string
+        errorMessages:
+          type: array
+          items:
+            type: string
+        nodeSize:
+          type: integer
+          format: int64
+        timeSteps:
+          type: integer
+          format: int64
+        computeWeight:
+          type: number
+          format: double
+        solverStartTime:
+          type: string
+          format: date-time
+          deprecated: true
+        solverEndTime:
+          type: string
+          format: date-time
+          deprecated: true
+        taskId:
+          type: string
+        workerGroup:
+          type: string
+        estWorkUnit:
+          type: number
+          format: double
+          deprecated: true
+        realWorkUnit:
+          type: number
+          format: double
+          deprecated: true
+        estCostMin:
+          type: number
+          format: double
+        estCostMax:
+          type: number
+          format: double
+        maxSolverUnit:
+          type: integer
+          format: int32
+        optSolverUnit:
+          type: integer
+          format: int32
+        minSolverUnit:
+          type: integer
+          format: int32
+        shutoffNt:
+          type: integer
+          format: int64
+        totalSolverTime:
+          type: integer
+          format: int64
+        startSolverTime:
+          type: string
+          format: date-time
+        loopSolverTime:
+          type: integer
+          format: int64
+        reserveToProcessTime:
+          type: string
+          format: date-time
+        startProcessTime:
+          type: string
+          format: date-time
+        finishSolverTime:
+          type: string
+          format: date-time
+        pipeline:
+          type: string
+        callbackUrl:
+          type: string
+        startPostProcessTime:
+          type: string
+          format: date-time
+        taskFinishTime:
+          type: string
+          format: date-time
+        credential:
+          type: boolean
+        estFlexUnit:
+          type: number
+          format: double
+        realFlexUnit:
+          type: number
+          format: double
+        taskStartTime:
+          type: string
+          format: date-time
+        preProcessStartTime:
+          type: string
+          format: date-time
+        solverFinishTime:
+          type: string
+          format: date-time
+        postProcessStartTime:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        storageSize:
+          type: integer
+          format: int64
+        retryCount:
+          type: string
+        metadataProcessed:
+          type: boolean
+        running:
+          type: boolean
+        parentId:
+          type: string
+        objectRefId:
+          type: string
+        refId:
+          type: string
+        confidential:
+          type: boolean
+        name:
+          type: string
+        id:
+          type: string
+    RestDataResponseTaskModel:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/TaskModel"
+    UserTenantAddReq:
+      required:
+      - userIdentities
+      type: object
+      properties:
+        userIdentities:
+          type: array
+          items:
+            type: string
+    RestDataResponseUserTenantAddResp:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UserTenantAddResp"
+    UserTenantAddResp:
+      type: object
+      properties:
+        failure:
+          type: array
+          items:
+            type: string
+        success:
+          type: array
+          items:
+            type: string
+    Tidy3DTaskSubmitReq:
+      type: object
+      properties:
+        protocolVersion:
+          type: string
+        solverVersion:
+          type: string
+        workerGroup:
+          type: string
+    SimCloudTidy3DTaskDetail:
+      type: object
+      properties:
+        taskName:
+          type: string
+        nodeSize:
+          type: integer
+          format: int64
+        completedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        realCost:
+          type: number
+          format: double
+        timeSteps:
+          type: integer
+          format: int64
+        solverVersion:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        submitTime:
+          type: string
+          format: date-time
+        estCostMin:
+          type: number
+          format: double
+        estCostMax:
+          type: number
+          format: double
+        s3Storage:
+          type: integer
+          format: int64
+        realFlexUnit:
+          type: number
+          format: double
+        estFlexUnit:
+          type: number
+          format: double
+        startSolverTime:
+          type: string
+          format: date-time
+        finishSolverTime:
+          type: string
+          format: date-time
+        totalSolverTime:
+          type: integer
+          format: int64
+        worker:
+          type: string
+        workerGroup:
+          type: string
+        execCount:
+          type: integer
+          format: int32
+        estWorkUnit:
+          type: number
+          format: double
+        maxSolverUnit:
+          type: integer
+          format: int32
+        minSolverUnit:
+          type: integer
+          format: int32
+        optSolverUnit:
+          type: integer
+          format: int32
+        computeWeight:
+          type: number
+          format: double
+        callbackUrl:
+          type: string
+        taskFinishTime:
+          type: string
+          format: date-time
+        metadataProcessed:
+          type: boolean
+        parentId:
+          type: string
+        taskType:
+          type: string
+        storageSize:
+          type: integer
+          format: int64
+          writeOnly: true
+        objectRefId:
+          type: string
+        refId:
+          type: string
+        confidential:
+          type: boolean
+        name:
+          type: string
+        id:
+          type: string
+        jobId:
+          type: string
+    Tidy3dMetadata:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+        flexUnit:
+          type: number
+          format: double
+        timeSteps:
+          type: integer
+          format: int32
+        nodeSize:
+          type: integer
+          format: int64
+        computeWeight:
+          type: number
+          format: double
+        maxResUnit:
+          type: integer
+          format: int32
+        minResUnit:
+          type: integer
+          format: int32
+        optResUnit:
+          type: integer
+          format: int32
+        workUnit:
+          type: number
+          format: double
+        flexUnitMin:
+          type: number
+          format: double
+        flexUnitMax:
+          type: number
+          format: double
+        empty:
+          type: boolean
+      additionalProperties:
+        type: object
+    Tidy3DSimulationUpgradeReq:
+      required:
+      - destProjectId
+      - sourceProjectId
+      - sourceTaskId
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+        sourceProjectId:
+          type: string
+        destProjectId:
+          type: string
+        sourceTaskId:
+          type: string
+    SimulationUpgradeResp:
+      type: object
+      properties:
+        taskId:
+          type: string
+    PublicResourceShareReq:
+      type: object
+      properties:
+        projectId:
+          type: string
+        resourceId:
+          type: string
+        type:
+          type: string
+    ArchiveViewRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    RestDataResponseInteger:
+      type: object
+      properties:
+        data:
+          type: integer
+          format: int32
+    Tidy3DUserProjectReq:
+      type: object
+      properties:
+        projectName:
+          type: string
+    Tidy3DTaskCreateReq:
+      type: object
+      properties:
+        taskName:
+          type: string
+        callbackUrl:
+          type: string
+    SimCloudTidy3DTaskRunResp:
+      type: object
+      properties:
+        projectId:
+          type: string
+        userId:
+          type: string
+        taskId:
+          type: string
+        taskName:
+          type: string
+        nodeSize:
+          type: integer
+          format: int64
+        completedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        realCost:
+          type: number
+          format: double
+        timeSteps:
+          type: integer
+          format: int64
+        solverVersion:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        estCostMin:
+          type: number
+          format: double
+        estCostMax:
+          type: number
+          format: double
+        s3Storage:
+          type: integer
+          format: int64
+        realFlexUnit:
+          type: number
+          format: double
+        estFlexUnit:
+          type: number
+          format: double
+        startSolverTime:
+          type: string
+          format: date-time
+        finishSolverTime:
+          type: string
+          format: date-time
+        totalSolverTime:
+          type: integer
+          format: int64
+        worker:
+          type: string
+        workerGroup:
+          type: string
+        execCount:
+          type: integer
+          format: int32
+        estWorkUnit:
+          type: number
+          format: double
+        maxSolverUnit:
+          type: integer
+          format: int32
+        minSolverUnit:
+          type: integer
+          format: int32
+        optSolverUnit:
+          type: integer
+          format: int32
+        computeWeight:
+          type: number
+          format: double
+        callbackUrl:
+          type: string
+        taskFinishTime:
+          type: string
+          format: date-time
+        metadataProcessed:
+          type: boolean
+        taskType:
+          type: string
+    Tidy3DSimulationReq:
+      type: object
+      properties:
+        type:
+          type: string
+        sourceProjectId:
+          type: string
+        destProjectId:
+          type: string
+        sourceTaskId:
+          type: string
+        destTaskName:
+          type: string
+    Tidy3DSimulationRes:
+      type: object
+      properties:
+        metadata:
+          type: string
+        simulation:
+          type: string
+        task:
+          "$ref": "#/components/schemas/SimCloudTidy3DTask"
+    LibraryReq:
+      type: object
+      properties:
+        name:
+          type: string
+        mediumType:
+          type: string
+        jsonInput:
+          type: string
+    LibraryModel:
+      type: object
+      properties:
+        userId:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        jsonInput:
+          type: string
+        mediumType:
+          type: string
+        calcResult:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        delete:
+          type: boolean
+    RestDataResponseLibraryModel:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/LibraryModel"
+    MaterialFitterSaveReq:
+      required:
+      - fitterName
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        fitterName:
+          type: string
+    MaterialFitterFitReq:
+      required:
+      - fileName
+      - resourcePath
+      type: object
+      properties:
+        fileName:
+          type: string
+        resourcePath:
+          type: string
+        jsonInput:
+          type: string
+    MaterialFitterResp:
+      type: object
+      properties:
+        id:
+          type: string
+        fileName:
+          type: string
+        userId:
+          type: string
+        resourcePath:
+          type: string
+        jsonInput:
+          type: string
+        status:
+          type: string
+        calcResult:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    RestDataResponseMaterialFitterResp:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/MaterialFitterResp"
+    MaterialFitterCallbackReq:
+      type: object
+      properties:
+        id:
+          type: string
+        calcResult:
+          type: string
+        status:
+          type: string
+    BatchOperationRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    BatchOperationResponse:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Item"
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: integer
+          format: int32
+        msg:
+          type: string
+    RestDataResponseBatchOperationResponse:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/BatchOperationResponse"
+    TaskListRequest:
+      type: object
+      properties:
+        taskIds:
+          type: array
+          items:
+            type: string
+    RestDataResponseListTaskModel:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TaskModel"
+    FDTDFolder:
+      type: object
+      properties:
+        name:
+          type: string
+        userId:
+          type: string
+        id:
+          type: string
+        children:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TaskModel"
+        status:
+          type: string
+        lastUpdatedTime:
+          type: integer
+          format: int64
+    RestDataResponseFDTDFolder:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/FDTDFolder"
+    GuestUserAccess:
+      type: object
+      properties:
+        identity:
+          type: string
+        email:
+          type: string
+        userId:
+          type: string
+    RestDataResponseUserModel:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UserModel"
+    UserModel:
+      type: object
+      properties:
+        identityId:
+          type: string
+        email:
+          type: string
+        loginTimes:
+          type: integer
+          format: int32
+        userAccessKey:
+          type: string
+        userId:
+          type: string
+        userName:
+          type: string
+        userSecretAccessKey:
+          type: string
+        organization:
+          type: string
+        role:
+          type: string
+        inviteCode:
+          type: string
+        personName:
+          type: string
+        company:
+          type: string
+        redeemedCodes:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        lastLoginTime:
+          type: string
+          format: date-time
+        appType:
+          type: string
+        accessUserIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        level:
+          type: string
+        guestUsers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/GuestUserAccess"
+        secured:
+          type: boolean
+        userSub:
+          type: string
+        defaultJobPriority:
+          type: integer
+          format: int32
+        jobPriorityCapacity:
+          type: integer
+          format: int32
+        tags:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        userJobTags:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        rotor5Entitled:
+          type: boolean
+        notes:
+          type: string
+        jiraId:
+          type: string
+        slackId:
+          type: string
+        apikey:
+          type: string
+        admin:
+          type: boolean
+    RestDataResponseString:
+      type: object
+      properties:
+        data:
+          type: string
+    FileInfo:
+      type: object
+      properties:
+        signedUrl:
+          type: string
+        contentLength:
+          type: integer
+          format: int64
+    RestDataResponseFileInfo:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/FileInfo"
+    RestDataResponseSolverVersion:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/SolverVersion"
+    SolverVersion:
+      type: object
+      properties:
+        solverVersion:
+          type: string
+    RestDataResponseUserInfoResp:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UserInfoResp"
+    UserInfoResp:
+      type: object
+      properties:
+        userId:
+          type: string
+        identityId:
+          type: string
+        personName:
+          type: string
+        clientAdmin:
+          type: boolean
+    RestDataResponseListTenantUsersDetail:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TenantUsersDetail"
+    TenantUsersDetail:
+      type: object
+      properties:
+        tenantId:
+          type: string
+        identityId:
+          type: string
+        userId:
+          type: string
+        personName:
+          type: string
+        userSub:
+          type: string
+        userEmail:
+          type: string
+        lastLoginTime:
+          type: string
+          format: date-time
+        licenseName:
+          type: string
+        product:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        clientAdmin:
+          type: boolean
+    MatchingUserInfo:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        identityId:
+          type: string
+        personName:
+          type: string
+        tenantMember:
+          type: boolean
+    RestDataResponseListMatchingUserInfo:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MatchingUserInfo"
+    RestDataResponseListSimCloudTidy3DTaskRes:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/SimCloudTidy3DTaskRes"
+    SimCloudTidy3DTaskRes:
+      type: object
+      properties:
+        userId:
+          type: string
+        projectId:
+          type: string
+        taskId:
+          type: string
+        taskName:
+          type: string
+        uploadPath:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        createdFrom:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedFrom:
+          type: string
+        nodeSize:
+          type: integer
+          format: int64
+        completedAt:
+          type: string
+          format: date-time
+        storageSize:
+          type: integer
+          format: int64
+        storageStatus:
+          type: string
+        standardAge:
+          type: integer
+          format: int64
+        storageClass:
+          type: string
+        restoreAt:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        public:
+          type: boolean
+    RemoteFileTransferResponse:
+      type: object
+      properties:
+        cloudpath:
+          type: string
+        userCredentials:
+          "$ref": "#/components/schemas/UserCredentials"
+    RestDataResponseRemoteFileTransferResponse:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/RemoteFileTransferResponse"
+    UserCredentials:
+      type: object
+      properties:
+        accessKeyId:
+          type: string
+        secretAccessKey:
+          type: string
+        sessionToken:
+          type: string
+        expiration:
+          type: string
+          format: date-time
+        region:
+          type: string
+    SimCloudTidy3DTaskDetailResp:
+      type: object
+      properties:
+        projectId:
+          type: string
+        taskId:
+          type: string
+        taskName:
+          type: string
+        uploadPath:
+          type: string
+        nodeSize:
+          type: integer
+          format: int64
+        completedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        realCost:
+          type: number
+          format: double
+        timeSteps:
+          type: integer
+          format: int64
+        solverVersion:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        estCostMin:
+          type: number
+          format: double
+        estCostMax:
+          type: number
+          format: double
+        realFlexUnit:
+          type: number
+          format: double
+        estFlexUnit:
+          type: number
+          format: double
+        s3Storage:
+          type: integer
+          format: int64
+        startSolverTime:
+          type: string
+          format: date-time
+        finishSolverTime:
+          type: string
+          format: date-time
+        totalSolverTime:
+          type: integer
+          format: int64
+        callbackUrl:
+          type: string
+        storageStatus:
+          type: string
+        hasShare:
+          type: boolean
+        statusToError:
+          type: string
+        taskType:
+          type: string
+    RestDataResponseUserResource:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UserResource"
+    UserResource:
+      type: object
+      properties:
+        identity:
+          type: string
+        projectIds:
+          type: array
+          items:
+            type: string
+        taskIds:
+          type: array
+          items:
+            type: string
+    RestDataResponseTidy3dQueryByProjectNameResp:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/Tidy3dQueryByProjectNameResp"
+    Tidy3dQueryByProjectNameResp:
+      type: object
+      properties:
+        projectName:
+          type: string
+        projectId:
+          type: string
+        duplicateProjectIds:
+          type: array
+          items:
+            type: string
+    SimCloudTidy3DTaskSnapshot:
+      type: object
+      properties:
+        taskId:
+          type: string
+        metadata:
+          type: string
+        editorMetadata:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        userId:
+          type: string
+    RestDataResponseListTidy3dQueryByKeyResp:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Tidy3dQueryByKeyResp"
+    Task:
+      type: object
+      properties:
+        taskId:
+          type: string
+        taskName:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        gridsPoints:
+          type: integer
+          format: int64
+    Tidy3dQueryByKeyResp:
+      type: object
+      properties:
+        projectName:
+          type: string
+        projectId:
+          type: string
+        personName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        tasks:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Task"
+    LibraryResp:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        mediumType:
+          type: string
+        userId:
+          type: string
+        jsonInput:
+          type: string
+        calcResult:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    RestDataResponseListLibraryResp:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/LibraryResp"
+    RestDataResponseLibraryResp:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/LibraryResp"
+    RestDataResponseListMaterialFitterResp:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MaterialFitterResp"
+    AccountInfo:
+      type: object
+      properties:
+        totalTaskCount:
+          type: number
+          format: double
+        credit:
+          type: number
+          format: double
+        s3Usage:
+          type: integer
+          format: int64
+        monthlyTaskCount:
+          type: number
+          format: double
+        creditExpiration:
+          type: string
+          format: date-time
+        accountType:
+          type: string
+        tenantId:
+          type: string
+        tenantName:
+          type: string
+        clientAdmin:
+          type: boolean
+    RestDataResponseAccountInfo:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/AccountInfo"
+    RestDataResponseListString:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: string
+    PublicResourceAuth:
+      type: object
+      properties:
+        resourceId:
+          type: string
+        resourceUserId:
+          type: string
+        userCredential:
+          "$ref": "#/components/schemas/UserCredentials"
+        public:
+          type: boolean
+        delete:
+          type: boolean
+        currentUser:
+          type: boolean
+    RestDataResponsePublicResourceAuth:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/PublicResourceAuth"
+    ListPagePublicResourceInfo:
+      type: object
+      properties:
+        start:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PublicResourceInfo"
+        total:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+    PublicResourceInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        targetId:
+          type: string
+        type:
+          type: string
+        productType:
+          type: string
+        title:
+          type: string
+        thumbnailUrl:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+    RestDataResponseListPagePublicResourceInfo:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/ListPagePublicResourceInfo"
+    RestDataResponseListFDTDFolder:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FDTDFolder"
+    UserTenantRemoveReq:
+      required:
+      - userIdentities
+      type: object
+      properties:
+        userIdentities:
+          type: array
+          items:
+            type: string
+    RestDataResponseUserTenantRemoveResp:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UserTenantRemoveResp"
+    UserTenantRemoveResp:
+      type: object
+      properties:
+        failure:
+          type: array
+          items:
+            type: string
+        success:
+          type: array
+          items:
+            type: string
+    Tidy3dTaskBatchDeleteReq:
+      type: object
+      properties:
+        tasks:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Tidy3dTaskDeleteReq"
+    Tidy3dTaskDeleteReq:
+      type: object
+      properties:
+        taskId:
+          type: string
+        uploadPath:
+          type: string
+    Tidy3DUserProjectBatchDelReq:
+      type: object
+      properties:
+        projectIds:
+          type: array
+          items:
+            type: string
+    SimCloudTidy3DUserProject:
+      type: object
+      properties:
+        projectName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        projectId:
+          type: string
+        liked:
+          type: boolean
+        pinned:
+          type: boolean
+        userId:
+          type: string
+    Tidy3DUserProjectBatchDelResp:
+      type: object
+      properties:
+        success:
+          type: array
+          items:
+            "$ref": "#/components/schemas/SimCloudTidy3DUserProject"
+        failure:
+          type: array
+          items:
+            "$ref": "#/components/schemas/SimCloudTidy3DUserProject"
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
