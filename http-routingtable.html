@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTTP Routing Table &mdash; tidy3d-webpai 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+ 
+
+    <script>
+      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
+    </script>
+
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> tidy3d-webpai
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tidy3d-webpai</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>HTTP Routing Table</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+   <h1>HTTP Routing Table</h1>
+
+   <div class="modindex-jumpbox">
+   <a href="#cap-/apikey"><strong>/apikey</strong></a> | 
+   <a href="#cap-/fdtd"><strong>/fdtd</strong></a> | 
+   <a href="#cap-/health"><strong>/health</strong></a> | 
+   <a href="#cap-/info"><strong>/info</strong></a> | 
+   <a href="#cap-/public"><strong>/public</strong></a> | 
+   <a href="#cap-/solver"><strong>/solver</strong></a> | 
+   <a href="#cap-/task"><strong>/task</strong></a> | 
+   <a href="#cap-/tidy3d"><strong>/tidy3d</strong></a>
+   </div>
+
+   <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/apikey"><td></td><td>
+       <strong>/apikey</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--apikey"><code class="xref">GET /apikey</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--apikey"><code class="xref">POST /apikey</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/fdtd"><td></td><td>
+       <strong>/fdtd</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--fdtd-account"><code class="xref">GET /fdtd/account</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--fdtd-folders"><code class="xref">GET /fdtd/folders</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--fdtd-model-modelId"><code class="xref">GET /fdtd/model/{modelId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--fdtd-models"><code class="xref">GET /fdtd/models</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--fdtd-task-taskId"><code class="xref">GET /fdtd/task/{taskId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--fdtd-tasks"><code class="xref">GET /fdtd/tasks</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--fdtd-account-redeem"><code class="xref">POST /fdtd/account/redeem</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--fdtd-model"><code class="xref">POST /fdtd/model</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--fdtd-model-modelId-task"><code class="xref">POST /fdtd/model/{modelId}/task</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--fdtd-task"><code class="xref">POST /fdtd/task</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--fdtd-tasks"><code class="xref">POST /fdtd/tasks</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--fdtd-model-modelId-task-taskId"><code class="xref">PUT /fdtd/model/{modelId}/task/{taskId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--fdtd-model-modelId"><code class="xref">DELETE /fdtd/model/{modelId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--fdtd-task-taskId"><code class="xref">DELETE /fdtd/task/{taskId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/health"><td></td><td>
+       <strong>/health</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--health"><code class="xref">GET /health</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/info"><td></td><td>
+       <strong>/info</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--info"><code class="xref">GET /info</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/public"><td></td><td>
+       <strong>/public</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--public-tidy3d-resources"><code class="xref">GET /public/tidy3d/resources</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--public-tidy3d-resources-resourceId-snapshot"><code class="xref">GET /public/tidy3d/resources/{resourceId}/snapshot</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--public-tidy3d-resources-resourceId-taskDetail"><code class="xref">GET /public/tidy3d/resources/{resourceId}/taskDetail</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--public-tidy3d-share-auth"><code class="xref">GET /public/tidy3d/share/auth</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/solver"><td></td><td>
+       <strong>/solver</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--solver-task-taskId-visualize"><code class="xref">GET /solver/task/{taskId}/visualize</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/task"><td></td><td>
+       <strong>/task</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--task-taskId-signedUrl"><code class="xref">GET /task/{taskId}/signedUrl</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/tidy3d"><td></td><td>
+       <strong>/tidy3d</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-account"><code class="xref">GET /tidy3d/account</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-account-tenant"><code class="xref">GET /tidy3d/account/tenant</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-fitter"><code class="xref">GET /tidy3d/fitter</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-fitter-last"><code class="xref">GET /tidy3d/fitter/last</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-fitter-id"><code class="xref">GET /tidy3d/fitter/{id}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-fitter-uploadPath-signedUrl"><code class="xref">GET /tidy3d/fitter/{uploadPath}/signedUrl</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-libraries"><code class="xref">GET /tidy3d/libraries</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-libraries-id"><code class="xref">GET /tidy3d/libraries/{id}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-project"><code class="xref">GET /tidy3d/project</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-projects"><code class="xref">GET /tidy3d/projects</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-projects-key"><code class="xref">GET /tidy3d/projects/key</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-projects-projectId"><code class="xref">GET /tidy3d/projects/{projectId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-projects-projectId-tasks"><code class="xref">GET /tidy3d/projects/{projectId}/tasks</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-projects-projectId-tasks-taskId"><code class="xref">GET /tidy3d/projects/{projectId}/tasks/{taskId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-projects-projectId-tasks-taskId-snapshot"><code class="xref">GET /tidy3d/projects/{projectId}/tasks/{taskId}/snapshot</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-projects-projectId-tasks-taskId-taskDetail"><code class="xref">GET /tidy3d/projects/{projectId}/tasks/{taskId}/taskDetail</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-resource-grant"><code class="xref">GET /tidy3d/resource/grant</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-resource-user"><code class="xref">GET /tidy3d/resource/user</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-s3upload-grant"><code class="xref">GET /tidy3d/s3upload/grant</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-simulation-sample.json"><code class="xref">GET /tidy3d/simulation/sample.json</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-tasks"><code class="xref">GET /tidy3d/tasks</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-tasks-taskId-detail"><code class="xref">GET /tidy3d/tasks/{taskId}/detail</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-tasks-taskId-file"><code class="xref">GET /tidy3d/tasks/{taskId}/file</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-tenant-matchingUsers"><code class="xref">GET /tidy3d/tenant/matchingUsers</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-tenant-users"><code class="xref">GET /tidy3d/tenant/users</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-user"><code class="xref">GET /tidy3d/user</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-version-solver"><code class="xref">GET /tidy3d/version/solver</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-uploadPath-signedInfo"><code class="xref">GET /tidy3d/{uploadPath}/signedInfo</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#get--tidy3d-uploadPath-signedUrl"><code class="xref">GET /tidy3d/{uploadPath}/signedUrl</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-archive"><code class="xref">POST /tidy3d/archive</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-batchArchive"><code class="xref">POST /tidy3d/batchArchive</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-batchRestore"><code class="xref">POST /tidy3d/batchRestore</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-fitter-callback"><code class="xref">POST /tidy3d/fitter/callback</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-fitter-fit"><code class="xref">POST /tidy3d/fitter/fit</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-fitter-save"><code class="xref">POST /tidy3d/fitter/save</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-libraries"><code class="xref">POST /tidy3d/libraries</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-projects"><code class="xref">POST /tidy3d/projects</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-projects-tasks-copy"><code class="xref">POST /tidy3d/projects/tasks/copy</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-projects-projectId-tasks"><code class="xref">POST /tidy3d/projects/{projectId}/tasks</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-projects-projectId-tasks-snapshot"><code class="xref">POST /tidy3d/projects/{projectId}/tasks/snapshot</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-projects-projectId-tasks-taskId-run"><code class="xref">POST /tidy3d/projects/{projectId}/tasks/{taskId}/run</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-projects-projectId-tasks-taskId-submit"><code class="xref">POST /tidy3d/projects/{projectId}/tasks/{taskId}/submit</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-restore"><code class="xref">POST /tidy3d/restore</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-share"><code class="xref">POST /tidy3d/share</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-tasks-upgrade"><code class="xref">POST /tidy3d/tasks/upgrade</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-tasks-taskId-metadata"><code class="xref">POST /tidy3d/tasks/{taskId}/metadata</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-tasks-taskId-submit"><code class="xref">POST /tidy3d/tasks/{taskId}/submit</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#post--tidy3d-tenant-users"><code class="xref">POST /tidy3d/tenant/users</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--tidy3d-libraries"><code class="xref">PUT /tidy3d/libraries</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--tidy3d-projects-projectId"><code class="xref">PUT /tidy3d/projects/{projectId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--tidy3d-projects-projectId-tasks-taskId"><code class="xref">PUT /tidy3d/projects/{projectId}/tasks/{taskId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--tidy3d-projects-projectId-tasks-taskId-snapshot"><code class="xref">PUT /tidy3d/projects/{projectId}/tasks/{taskId}/snapshot</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--tidy3d-tasks-move"><code class="xref">PUT /tidy3d/tasks/move</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#put--tidy3d-tasks-status"><code class="xref">PUT /tidy3d/tasks/status</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-fitter-id"><code class="xref">DELETE /tidy3d/fitter/{id}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-libraries-id"><code class="xref">DELETE /tidy3d/libraries/{id}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-projects"><code class="xref">DELETE /tidy3d/projects</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-projects-projectId"><code class="xref">DELETE /tidy3d/projects/{projectId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-projects-projectId-tasks-taskId"><code class="xref">DELETE /tidy3d/projects/{projectId}/tasks/{taskId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-share"><code class="xref">DELETE /tidy3d/share</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-tasks"><code class="xref">DELETE /tidy3d/tasks</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-tasks-taskId"><code class="xref">DELETE /tidy3d/tasks/{taskId}</code></a></td><td>
+       <em>null</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="index.html#delete--tidy3d-tenant-users"><code class="xref">DELETE /tidy3d/tenant/users</code></a></td><td>
+       <em>null</em></td></tr>
+   </table>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, An Li.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
