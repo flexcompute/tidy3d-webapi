@@ -22,9 +22,7 @@ jobs:
         cache: 'poetry'
     - name: Install dependencies
       run: poetry install
-    - uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "docs/"
+    - run: sphinx-build -b html docs/source/ docs/build/html
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v1
