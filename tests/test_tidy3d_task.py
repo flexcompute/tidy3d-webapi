@@ -55,3 +55,13 @@ def test_submit():
     sim = task.get_simulation()
     task = Tidy3DTask.create(sim, "test task", "test folder1")
     task.submit(protocol_version="1.6.3")
+
+
+def test_estimate_cost():
+    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    assert task.estimate_cost()
+
+
+def test_running_info():
+    task = Tidy3DTask.get_task("64a365b2-11e9-4593-a3e0-69361fcc2549")
+    assert task.get_running_info()

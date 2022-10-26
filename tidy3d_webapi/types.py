@@ -14,6 +14,8 @@ from tidy3d_webapi.http_management import http
 from tidy3d_webapi.s3_utils import download_file, upload_file, upload_string
 
 SIMULATION_JSON = "simulation.json"
+SIMULATION_HDF5 = "output/monitor_data.hdf5"
+RUNNING_INFO = "output/solver_progress.csv"
 
 
 class Tidy3DFolder(BaseModel, extra=Extra.allow):
@@ -162,7 +164,17 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
         :param to_file:
         :return:
         """
+        assert self.task_id
         download_file(self.task_id, SIMULATION_JSON, to_file=to_file)
+
+    def upload_simulation(self):
+        """
+        Upload simulation object to platform.
+        :return:
+        """
+        assert self.task_id
+        assert self.simulation
+        upload_string(self.task_id, self.simulation.json(), SIMULATION_JSON)
 
     def _upload_file(self, local_file: str, remote_filename: str):
         """
@@ -171,8 +183,7 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
         :param remote_filename:
         :return:
         """
-        if not self.task_id:
-            raise ValueError("Task id not found.")
+        assert self.task_id
 
         upload_file(self.task_id, local_file, remote_filename)
 
@@ -191,3 +202,40 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
                 "protocolVersion": protocol_version,
             },
         )
+
+    def estimate_cost(self, solver_version=None, protocol_version=None):
+        """
+        Estimate cost for this task.
+        :return:
+        """
+        assert self.task_id
+        resp = http.post(
+            f"tidy3d/tasks/{self.task_id}/metadata",
+            {
+                "solverVersion": solver_version,
+                "protocolVersion": protocol_version,
+            },
+        )
+        return resp
+
+    def get_simulation_hdf5(self, to_file: str):
+        """
+        Get simulation.json from platform.
+        :param to_file:
+        :return:
+        """
+        assert self.task_id
+        download_file(self.task_id, SIMULATION_HDF5, to_file=to_file)
+
+    def get_running_info(self):
+        """
+        Get running info.
+        :return:
+        """
+        assert self.task_id
+        with tempfile.NamedTemporaryFile() as temp:
+            download_file(self.task_id, RUNNING_INFO, to_file=temp.name, show_progress=False)
+            with open(temp.name, "r", encoding="utf-8") as csv:
+                progress_string = csv.readlines()
+                perc_done, field_decay = progress_string[-1].split(",")
+                return float(perc_done), float(field_decay)
