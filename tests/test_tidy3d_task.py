@@ -5,7 +5,7 @@ import pytest
 from requests import HTTPError
 
 from tidy3d_webapi.environment import Env
-from tidy3d_webapi.types import Tidy3DFolder, Tidy3DTask
+from tidy3d_webapi.simulation_task import SimulationTask, Tidy3DFolder
 
 Env.dev.active()
 
@@ -18,57 +18,57 @@ def test_list_tasks():
 
 
 def test_query_task():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     assert task
     with pytest.raises(HTTPError):
-        assert Tidy3DTask.get_task("xxx") is None
+        assert SimulationTask.get("xxx") is None
 
 
 def test_get_simulation_json():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     with tempfile.NamedTemporaryFile() as temp:
         task.get_simulation_json(temp.name)
         assert os.path.exists(temp.name)
 
 
 def test_get_simulation_json():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     sim = task.get_simulation()
     assert sim
 
 
 def test_upload():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     with tempfile.NamedTemporaryFile() as temp:
         task._upload_file(temp.name, "temp.json")
 
 
 def test_create():
-    task = Tidy3DTask.create(None, "test task", "test folder2")
+    task = SimulationTask.create(None, "test task", "test folder2")
     assert task.task_id
-    task.remove()
-    Tidy3DFolder.get("test folder2").remove()
+    task.delete()
+    Tidy3DFolder.get("test folder2").delete()
 
 
 def test_submit():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     sim = task.get_simulation()
-    task = Tidy3DTask.create(sim, "test task", "test folder1")
+    task = SimulationTask.create(sim, "test task", "test folder1")
     task.submit(protocol_version="1.6.3")
 
 
 def test_estimate_cost():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     assert task.estimate_cost()
 
 
 def test_running_info():
-    task = Tidy3DTask.get_task("64a365b2-11e9-4593-a3e0-69361fcc2549")
+    task = SimulationTask.get("64a365b2-11e9-4593-a3e0-69361fcc2549")
     assert task.get_running_info()
 
 
 def test_get_log():
-    task = Tidy3DTask.get_task("64a365b2-11e9-4593-a3e0-69361fcc2549")
+    task = SimulationTask.get("64a365b2-11e9-4593-a3e0-69361fcc2549")
     with tempfile.NamedTemporaryFile() as temp:
         task.get_log(temp.name)
         assert os.path.getsize(temp.name) > 0

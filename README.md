@@ -63,12 +63,12 @@ new_folder = Tidy3DFolder.create(name="new_folder")
 ```python
 import os
 import tempfile
-from tidy3d_webapi import Tidy3DFolder, Tidy3DTask
+from tidy3d_webapi import Tidy3DFolder, SimulationTask
 
 default_folder = Tidy3dFolder.get("default")
 tasks = default_folder.list_tasks()
 
-task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
 with tempfile.NamedTemporaryFile() as temp:
     task.get_simulation_json(temp.name)
     assert os.path.exists(temp.name)
@@ -81,23 +81,23 @@ sim = task.get_simulation()
 
 ```python
 sim = Simulation.from_file("simulation.json")
-task = Tidy3DTask.create(sim, task_name="test task", folder_name="test folder2")
+task = Tidy3DTask.submit(sim, task_name="test task", folder_name="test folder2")
 ```
 
 ### Task submitting
 
 ```python
-task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+task = Tidy3DTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
 sim = task.get_simulation()
-task = Tidy3DTask.create(sim, "test task", "test folder1")
+task = Tidy3DTask.submit(sim, "test task", "test folder1")
 task.submit(protocol_version="1.6.3")
 ```
 
 ### Remove task
 
 ```python
-task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
-task.remove()
+task = Tidy3DTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+task.delete()
 ```
 
 ## Material Fitter
@@ -119,14 +119,14 @@ from tidy3d.plugins import DispersionFitter
 from tidy3d_webapi.material_fitter import FitterOptions, MaterialFitterTask
 
 fitter = DispersionFitter.from_file("data/nk_data.csv", skiprows=1, delimiter=",")
-task = MaterialFitterTask.create(fitter, FitterOptions())
+task = MaterialFitterTask.submit(fitter, FitterOptions())
 
 retry = 0
 max_retry = 12
 waiting_sec = 10
 
 while retry < max_retry:
-    task.sync_status() # sync fitter status
+    task.sync_status()  # sync fitter status
     retry += 1
     if task.status == "COMPLETED":
         break
@@ -134,7 +134,7 @@ while retry < max_retry:
         time.sleep(waiting_sec)
 
 assert task.status == "COMPLETED"
-assert task.save_to_library("test_material") # save to library
+assert task.save_to_library("test_material")  # save to library
 ```
 # Contribution
 

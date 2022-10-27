@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 from tidy3d.plugins import DispersionFitter
 
 from tidy3d_webapi.http_management import http
+from tidy3d_webapi.tidy3d_types import Submittable
 
 
 class ConstraintEnum(str, Enum):
@@ -47,7 +48,9 @@ class _FitterRequest(BaseModel):
     resourcePath: str
 
 
-class MaterialFitterTask(BaseModel):
+class MaterialFitterTask(
+    Submittable,
+):
     """
     Material Fitter Task
     """
@@ -59,7 +62,7 @@ class MaterialFitterTask(BaseModel):
     resource_path: str = Field(..., alias="resourcePath")
 
     @classmethod
-    def create(cls, fitter: DispersionFitter, options: FitterOptions):
+    def submit(cls, fitter: DispersionFitter, options: FitterOptions):
         """
         Create a new material fitter task
         :param fitter:

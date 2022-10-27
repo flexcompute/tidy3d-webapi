@@ -6,13 +6,14 @@ import tempfile
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, Extra, Field, parse_obj_as
+from pydantic import Extra, Field, parse_obj_as
 from tidy3d import Simulation
 from tidy3d.version import __version__
 
 from tidy3d_webapi.cache import FOLDER_CACHE
 from tidy3d_webapi.http_management import http
 from tidy3d_webapi.s3_utils import download_file, upload_file, upload_string
+from tidy3d_webapi.tidy3d_types import Queryable, Submittable, T, Tidy3DResource
 
 SIMULATION_JSON = "simulation.json"
 SIMULATION_HDF5 = "output/monitor_data.hdf5"
@@ -20,7 +21,7 @@ RUNNING_INFO = "output/solver_progress.csv"
 LOG_FILE = "output/tidy3d.log"
 
 
-class Tidy3DFolder(BaseModel, extra=Extra.allow):
+class Tidy3DFolder(Tidy3DResource, Queryable, extra=Extra.allow):
     """
     Tidy3D Folder
     """
@@ -69,7 +70,7 @@ class Tidy3DFolder(BaseModel, extra=Extra.allow):
         resp = http.post("tidy3d/projects", {"projectName": folder_name})
         return Tidy3DFolder(**resp) if resp else None
 
-    def remove(self):
+    def delete(self):
         """
         Remove this folder
         :return:
@@ -84,7 +85,7 @@ class Tidy3DFolder(BaseModel, extra=Extra.allow):
         resp = http.get(f"tidy3d/projects/{self.folder_id}/tasks")
         return (
             parse_obj_as(
-                List[Tidy3DTask],
+                List[SimulationTask],
                 resp,
             )
             if resp
@@ -92,7 +93,7 @@ class Tidy3DFolder(BaseModel, extra=Extra.allow):
         )
 
 
-class Tidy3DTask(BaseModel, extra=Extra.allow):
+class SimulationTask(Tidy3DResource, Submittable, extra=Extra.allow):
     """
     Tidy3D Task
     """
@@ -128,19 +129,19 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
             f"tidy3d/projects/{folder.folder_id}/tasks",
             {"task_name": task_name, "call_back_url": call_back_url},
         )
-        return Tidy3DTask(**resp, simulation=simulation, folder=folder)
+        return SimulationTask(**resp, simulation=simulation, folder=folder)
 
     @classmethod
-    def get_task(cls, task_id: str):
+    def get(cls, task_id: str) -> T:
         """
         Get task by task id
         :param task_id:
         :return:
         """
         resp = http.get(f"tidy3d/tasks/{task_id}/detail")
-        return Tidy3DTask(**resp) if resp else None
+        return SimulationTask(**resp) if resp else None
 
-    def remove(self):
+    def delete(self):
         """
         Remove this task
         :return:

@@ -4,13 +4,14 @@ Material Library API
 import json
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, parse_obj_as, validator
+from pydantic import Field, parse_obj_as, validator
 from tidy3d.components.medium import MediumType
 
 from tidy3d_webapi.http_management import http
+from tidy3d_webapi.tidy3d_types import Queryable
 
 
-class MaterialLibray(BaseModel, smart_union=True):
+class MaterialLibray(Queryable, smart_union=True):
     """
     Material Library
     """

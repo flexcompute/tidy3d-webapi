@@ -17,4 +17,4 @@ def test_get_folder():
 def test_create_and_remove_folder():
     resp = Tidy3DFolder.create("test folder2")
     assert resp is not None
-    resp.remove()
+    resp.delete()

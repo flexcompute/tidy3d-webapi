@@ -5,7 +5,7 @@ import pytest
 from requests import HTTPError
 
 from tidy3d_webapi.environment import Env
-from tidy3d_webapi.types import Tidy3DFolder, Tidy3DTask
+from tidy3d_webapi.simulation_task import SimulationTask, Tidy3DFolder
 from tidy3d_webapi.webapi import (
     delete,
     delete_old,
@@ -26,7 +26,7 @@ Env.dev.active()
 
 
 def test_upload():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     sim = task.get_simulation()
     assert upload(sim, "test", "testfolder")
 
@@ -36,9 +36,9 @@ def test_get_info():
 
 
 def test_start():
-    task = Tidy3DTask.get_task("3eb06d16-208b-487b-864b-e9b1d3e010a7")
+    task = SimulationTask.get("3eb06d16-208b-487b-864b-e9b1d3e010a7")
     sim = task.get_simulation()
-    task = Tidy3DTask.create(sim, "test task", "test folder1")
+    task = SimulationTask.create(sim, "test task", "test folder1")
     task.upload_simulation()
     start(task.task_id)
 
@@ -63,7 +63,7 @@ def test_estimate_cost():
 
 
 def test_delete():
-    task = Tidy3DTask.create(None, "default", "test delete")
+    task = SimulationTask.create(None, "default", "test delete")
     assert delete(task.task_id)
 
 
@@ -86,27 +86,27 @@ def test_download_log():
 
 def test_delete_old():
     folder = Tidy3DFolder.create("test delete old")
-    Tidy3DTask.create(None, "test case1", folder.folder_name)
-    Tidy3DTask.create(None, "test case2", folder.folder_name)
-    Tidy3DTask.create(None, "test case3", folder.folder_name)
-    Tidy3DTask.create(None, "test case4", folder.folder_name)
+    SimulationTask.create(None, "test case1", folder.folder_name)
+    SimulationTask.create(None, "test case2", folder.folder_name)
+    SimulationTask.create(None, "test case3", folder.folder_name)
+    SimulationTask.create(None, "test case4", folder.folder_name)
     assert 0 == delete_old(0, folder.folder_name)
     assert 4 == delete_old(-1, folder.folder_name)
-    folder.remove()
+    folder.delete()
 
 
 def test_get_tasks():
     delete_old(-1, "test_get_tasks")
     folder = Tidy3DFolder.create("test_get_tasks")
-    task1 = Tidy3DTask.create(None, "test case1", folder.folder_name)
-    task2 = Tidy3DTask.create(None, "test case2", folder.folder_name)
-    task3 = Tidy3DTask.create(None, "test case3", folder.folder_name)
-    task4 = Tidy3DTask.create(None, "test case4", folder.folder_name)
+    task1 = SimulationTask.create(None, "test case1", folder.folder_name)
+    task2 = SimulationTask.create(None, "test case2", folder.folder_name)
+    task3 = SimulationTask.create(None, "test case3", folder.folder_name)
+    task4 = SimulationTask.create(None, "test case4", folder.folder_name)
     assert not get_tasks(0, "old", folder=folder.folder_name)
     tasks = get_tasks(2, "new", folder.folder_name)
     assert tasks[0]["task_id"] == task4.task_id
-    task1.remove()
-    task2.remove()
-    task3.remove()
-    task4.remove()
-    folder.remove()
+    task1.delete()
+    task2.delete()
+    task3.delete()
+    task4.delete()
+    folder.delete()

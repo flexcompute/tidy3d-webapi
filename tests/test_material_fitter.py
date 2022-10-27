@@ -10,7 +10,7 @@ Env.dev.active()
 
 def test_material_fitter():
     fitter = DispersionFitter.from_file("data/nk_data.csv", skiprows=1, delimiter=",")
-    task = MaterialFitterTask.create(fitter, FitterOptions())
+    task = MaterialFitterTask.submit(fitter, FitterOptions())
 
     retry = 0
     max_retry = 12

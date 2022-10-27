@@ -10,7 +10,7 @@ from tidy3d.web.task import TaskId, TaskInfo
 from tidy3d.web.webapi import SIM_FILE_NAME
 from typing_extensions import Literal
 
-from tidy3d_webapi import Tidy3DFolder, Tidy3DTask
+from tidy3d_webapi import SimulationTask, Tidy3DFolder
 
 
 def upload(  # pylint:disable=too-many-locals,too-many-arguments
@@ -39,7 +39,7 @@ def upload(  # pylint:disable=too-many-locals,too-many-arguments
     ----
     To start the simulation running, must call :meth:`start` after uploaded.
     """
-    task = Tidy3DTask.create(simulation, task_name, folder_name, callback_url)
+    task = SimulationTask.create(simulation, task_name, folder_name, callback_url)
     task.upload_simulation()
     return task.task_id
 
@@ -57,7 +57,7 @@ def get_info(task_id: TaskId) -> TaskInfo:
     :class:`TaskInfo`
         Object containing information about status, size, credits of task.
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         raise ValueError("Task not found.")
     return TaskInfo(**{"taskId": task.task_id, **task.dict()})
@@ -77,7 +77,7 @@ def start(task_id: TaskId) -> None:
     ----
     To monitor progress, can call :meth:`monitor` after starting simulation.
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         raise ValueError("Task not found.")
     task.submit()
@@ -100,7 +100,7 @@ def get_run_info(task_id: TaskId):
         Average field intensity normlized to max value (1.0).
         Is ``None`` if run info not available.
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         raise ValueError("Task not found.")
     return task.get_running_info()
@@ -117,7 +117,7 @@ def download(task_id: TaskId, path: str = "simulation_data.hdf5") -> None:
         Download path to .hdf5 data file (including filename).
 
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         raise ValueError(f"Task {task_id} not found.")
     task.get_simulation_hdf5(path)
@@ -145,7 +145,7 @@ def load(
     SimulationData
         Object containing simulation data.
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         return None
     if not os.path.exists(path) or replace_existing:
@@ -177,8 +177,8 @@ def delete(task_id: TaskId) -> TaskInfo:
         Object containing information about status, size, credits of task.
     """
 
-    task = Tidy3DTask.get_task(task_id)
-    task.remove()
+    task = SimulationTask.get(task_id)
+    task.delete()
     return TaskInfo(**{"taskId": task.task_id, **task.dict()})
 
 
@@ -188,7 +188,7 @@ def estimate_cost(task_id: str) -> float:
     :param task_id:
     :return:
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         raise ValueError("Task not found.")
     resp = task.estimate_cost()
@@ -207,7 +207,7 @@ def download_json(task_id: TaskId, path: str = SIM_FILE_NAME) -> None:
     path : str = SIM_FILE_NAME
         Download path to .json file of simulation (including filename).
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         raise ValueError("Task not found.")
     task.get_simulation_json(path)
@@ -246,7 +246,7 @@ def download_log(task_id: TaskId, path: str = "tidy3d.log") -> None:
     ----
     To load downloaded results into data, call :meth:`load` with option `replace_existing=False`.
     """
-    task = Tidy3DTask.get_task(task_id)
+    task = SimulationTask.get(task_id)
     if not task:
         raise ValueError("Task not found.")
     task.get_log(path)
@@ -280,7 +280,7 @@ def delete_old(
         filter(lambda t: t.created_at < datetime.now(pytz.utc) - timedelta(days=days_old), tasks)
     )
     for task in tasks:
-        task.remove()
+        task.delete()
     return len(tasks)
 
 
