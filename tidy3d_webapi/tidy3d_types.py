@@ -10,7 +10,7 @@ T = TypeVar("T", bound="Tidy3DResource")
 
 
 class Tidy3DResource(BaseModel, ABC):
-    """ "Abstract base class / template for a webservice that implements resource life cycle management."""
+    """ "Abstract base class / template for a webservice that implements resource query."""
 
     @classmethod
     @abstractmethod
