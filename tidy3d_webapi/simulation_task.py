@@ -13,7 +13,13 @@ from tidy3d.version import __version__
 from tidy3d_webapi.cache import FOLDER_CACHE
 from tidy3d_webapi.http_management import http
 from tidy3d_webapi.s3_utils import download_file, upload_file, upload_string
-from tidy3d_webapi.tidy3d_types import Queryable, Submittable, T, Tidy3DResource
+from tidy3d_webapi.tidy3d_types import (
+    Queryable,
+    ResourceLifecycle,
+    Submittable,
+    T,
+    Tidy3DResource,
+)
 
 SIMULATION_JSON = "simulation.json"
 SIMULATION_HDF5 = "output/monitor_data.hdf5"
@@ -93,7 +99,7 @@ class Tidy3DFolder(Tidy3DResource, Queryable, extra=Extra.allow):
         )
 
 
-class SimulationTask(Tidy3DResource, Submittable, extra=Extra.allow):
+class SimulationTask(ResourceLifecycle, Submittable, extra=Extra.allow):
     """
     Tidy3D Task
     """

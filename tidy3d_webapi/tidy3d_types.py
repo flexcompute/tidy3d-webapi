@@ -14,13 +14,19 @@ class Tidy3DResource(BaseModel, ABC):
 
     @classmethod
     @abstractmethod
-    def create(cls, *args, **kwargs) -> T:
-        """Create a new resource and return it."""
+    def get(cls, *args, **kwargs) -> T:
+        """Get a resource from the server."""
+
+
+class ResourceLifecycle(Tidy3DResource, ABC):
+    """
+    Abstract base class / template for a webservice that implements resource life cycle management.
+    """
 
     @classmethod
     @abstractmethod
-    def get(cls, *args, **kwargs) -> T:
-        """Get a resource from the server."""
+    def create(cls, *args, **kwargs) -> T:
+        """Create a new resource and return it."""
 
     @abstractmethod
     def delete(self, *args, **kwargs) -> None:
