@@ -65,3 +65,10 @@ def test_estimate_cost():
 def test_running_info():
     task = Tidy3DTask.get_task("64a365b2-11e9-4593-a3e0-69361fcc2549")
     assert task.get_running_info()
+
+
+def test_get_log():
+    task = Tidy3DTask.get_task("64a365b2-11e9-4593-a3e0-69361fcc2549")
+    with tempfile.NamedTemporaryFile() as temp:
+        task.get_log(temp.name)
+        assert os.path.getsize(temp.name) > 0

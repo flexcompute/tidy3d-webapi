@@ -1,8 +1,9 @@
 """
-tidy3d webapi types
+Tidy3d webapi types
 """
 import os.path
 import tempfile
+from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel, Extra, Field, parse_obj_as
@@ -16,6 +17,7 @@ from tidy3d_webapi.s3_utils import download_file, upload_file, upload_string
 SIMULATION_JSON = "simulation.json"
 SIMULATION_HDF5 = "output/monitor_data.hdf5"
 RUNNING_INFO = "output/solver_progress.csv"
+LOG_FILE = "output/tidy3d.log"
 
 
 class Tidy3DFolder(BaseModel, extra=Extra.allow):
@@ -24,7 +26,7 @@ class Tidy3DFolder(BaseModel, extra=Extra.allow):
     """
 
     folder_id: str = Field(..., alias="projectId")
-    project_name: str = Field(..., alias="projectName")
+    folder_name: str = Field(..., alias="projectName")
 
     @classmethod
     def list(cls) -> []:
@@ -45,23 +47,26 @@ class Tidy3DFolder(BaseModel, extra=Extra.allow):
         )
 
     @classmethod
-    def get(cls, project_name: str):
+    def get(cls, folder_name: str):
         """
         Get folder by name.
-        :param project_name:
+        :param folder_name:
         :return:
         """
-        resp = http.get(f"tidy3d/project?projectName={project_name}")
+        resp = http.get(f"tidy3d/project?projectName={folder_name}")
         return Tidy3DFolder(**resp) if resp else None
 
     @classmethod
-    def create(cls, project_name: str):
+    def create(cls, folder_name: str):
         """
         Get folder by name.
-        :param project_name:
+        :param folder_name:
         :return:
         """
-        resp = http.post("tidy3d/projects", {"projectName": project_name})
+        folder = Tidy3DFolder.get(folder_name)
+        if folder:
+            return folder
+        resp = http.post("tidy3d/projects", {"projectName": folder_name})
         return Tidy3DFolder(**resp) if resp else None
 
     def remove(self):
@@ -94,6 +99,7 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
 
     task_id: Optional[str] = Field(..., alias="taskId")
     status: Optional[str]
+    created_at: Optional[datetime] = Field(..., alias="createdAt")
 
     simulation: Optional[Simulation]
 
@@ -145,7 +151,7 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
 
     def get_simulation(self) -> Optional[Simulation]:
         """
-        Get tidy3d simulation
+        Get Tidy3d simulation
         :return:
         """
         if self.simulation:
@@ -239,3 +245,11 @@ class Tidy3DTask(BaseModel, extra=Extra.allow):
                 progress_string = csv.readlines()
                 perc_done, field_decay = progress_string[-1].split(",")
                 return float(perc_done), float(field_decay)
+
+    def get_log(self, to_file: str):
+        """
+        Get log file.
+        :return:
+        """
+        assert self.task_id
+        download_file(self.task_id, LOG_FILE, to_file=to_file)

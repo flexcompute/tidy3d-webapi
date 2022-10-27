@@ -8,11 +8,16 @@ from tidy3d_webapi.environment import Env
 from tidy3d_webapi.types import Tidy3DFolder, Tidy3DTask
 from tidy3d_webapi.webapi import (
     delete,
+    delete_old,
     download,
+    download_json,
+    download_log,
     estimate_cost,
     get_info,
     get_run_info,
+    get_tasks,
     load,
+    load_simulation,
     start,
     upload,
 )
@@ -60,3 +65,48 @@ def test_estimate_cost():
 def test_delete():
     task = Tidy3DTask.create(None, "default", "test delete")
     assert delete(task.task_id)
+
+
+def test_download_json():
+    with tempfile.NamedTemporaryFile(suffix=".json") as hdfile:
+        download_json("64a365b2-11e9-4593-a3e0-69361fcc2549", hdfile.name)
+        assert os.path.getsize(hdfile.name) > 0
+
+
+def test_load_simulation():
+    with tempfile.NamedTemporaryFile(suffix=".json") as hdfile:
+        assert load_simulation("64a365b2-11e9-4593-a3e0-69361fcc2549", hdfile.name)
+
+
+def test_download_log():
+    with tempfile.NamedTemporaryFile(suffix=".log") as hdfile:
+        download_log("64a365b2-11e9-4593-a3e0-69361fcc2549", hdfile.name)
+        assert os.path.getsize(hdfile.name) > 0
+
+
+def test_delete_old():
+    folder = Tidy3DFolder.create("test delete old")
+    Tidy3DTask.create(None, "test case1", folder.folder_name)
+    Tidy3DTask.create(None, "test case2", folder.folder_name)
+    Tidy3DTask.create(None, "test case3", folder.folder_name)
+    Tidy3DTask.create(None, "test case4", folder.folder_name)
+    assert 0 == delete_old(0, folder.folder_name)
+    assert 4 == delete_old(-1, folder.folder_name)
+    folder.remove()
+
+
+def test_get_tasks():
+    delete_old(-1, "test_get_tasks")
+    folder = Tidy3DFolder.create("test_get_tasks")
+    task1 = Tidy3DTask.create(None, "test case1", folder.folder_name)
+    task2 = Tidy3DTask.create(None, "test case2", folder.folder_name)
+    task3 = Tidy3DTask.create(None, "test case3", folder.folder_name)
+    task4 = Tidy3DTask.create(None, "test case4", folder.folder_name)
+    assert not get_tasks(0, "old", folder=folder.folder_name)
+    tasks = get_tasks(2, "new", folder.folder_name)
+    assert tasks[0]["task_id"] == task4.task_id
+    task1.remove()
+    task2.remove()
+    task3.remove()
+    task4.remove()
+    folder.remove()

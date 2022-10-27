@@ -1,11 +1,16 @@
 """Provides lowest level, user-facing interface to server."""
 
 import os
+from datetime import datetime, timedelta
+from typing import Dict, List
 
+import pytz
 from tidy3d import Simulation, SimulationData
 from tidy3d.web.task import TaskId, TaskInfo
+from tidy3d.web.webapi import SIM_FILE_NAME
+from typing_extensions import Literal
 
-from tidy3d_webapi import Tidy3DTask
+from tidy3d_webapi import Tidy3DFolder, Tidy3DTask
 
 
 def upload(  # pylint:disable=too-many-locals,too-many-arguments
@@ -190,3 +195,115 @@ def estimate_cost(task_id: str) -> float:
     if not resp:
         raise ValueError("Failed to estimate cost.")
     return resp.get("flex_unit") or 0.0
+
+
+def download_json(task_id: TaskId, path: str = SIM_FILE_NAME) -> None:
+    """Download the `.json` file associated with the :class:`.Simulation` of a given task.
+
+    Parameters
+    ----------
+    task_id : str
+        Unique identifier of task on server.  Returned by :meth:`upload`.
+    path : str = SIM_FILE_NAME
+        Download path to .json file of simulation (including filename).
+    """
+    task = Tidy3DTask.get_task(task_id)
+    if not task:
+        raise ValueError("Task not found.")
+    task.get_simulation_json(path)
+
+
+def load_simulation(task_id: TaskId, path: str = SIM_FILE_NAME) -> Simulation:
+    """Download the `.json` file of a task and load the associated :class:`.Simulation`.
+
+    Parameters
+    ----------
+    task_id : str
+        Unique identifier of task on server.  Returned by :meth:`upload`.
+    path : str = SIM_FILE_NAME
+        Download path to .json file of simulation (including filename).
+
+    Returns
+    -------
+    :class:`.Simulation`
+        Simulation loaded from downloaded json file.
+    """
+    download_json(task_id, path)
+    return Simulation.from_file(path)
+
+
+def download_log(task_id: TaskId, path: str = "tidy3d.log") -> None:
+    """Download the tidy3d log file associated with a task.
+
+    Parameters
+    ----------
+    task_id : str
+        Unique identifier of task on server.  Returned by :meth:`upload`.
+    path : str = "tidy3d.log"
+        Download path to log file (including filename).
+
+    Note
+    ----
+    To load downloaded results into data, call :meth:`load` with option `replace_existing=False`.
+    """
+    task = Tidy3DTask.get_task(task_id)
+    if not task:
+        raise ValueError("Task not found.")
+    task.get_log(path)
+
+
+def delete_old(
+    days_old: int = 100,
+    folder: str = "default",
+) -> int:
+    """Delete all tasks older than a given amount of days.
+
+    Parameters
+    ----------
+    folder : str
+        Only allowed to delete in one folder at a time.
+    days_old : int = 100
+        Minimum number of days since the task creation.
+
+    Returns
+    -------
+    int
+        Total number of tasks deleted.
+    """
+    folder = Tidy3DFolder.get(folder)
+    if not folder:
+        return 0
+    tasks = folder.list_tasks()
+    if not tasks:
+        return 0
+    tasks = list(
+        filter(lambda t: t.created_at < datetime.now(pytz.utc) - timedelta(days=days_old), tasks)
+    )
+    for task in tasks:
+        task.remove()
+    return len(tasks)
+
+
+def get_tasks(
+    num_tasks: int = None, order: Literal["new", "old"] = "new", folder: str = "default"
+) -> List[Dict]:
+    """Get a list with the metadata of the last ``num_tasks`` tasks.
+
+    Parameters
+    ----------
+    num_tasks : int = None
+        The number of tasks to return, or, if ``None``, return all.
+    order : Literal["new", "old"] = "new"
+        Return the tasks in order of newest-first or oldest-first.
+    folder: str = "default"
+        Folder from which to get the tasks.
+    """
+    folder = Tidy3DFolder.get(folder)
+    tasks = folder.list_tasks()
+    if order == "new":
+        tasks = sorted(tasks, key=lambda t: t.created_at, reverse=True)
+    elif order == "old":
+        tasks = sorted(tasks, key=lambda t: t.created_at)
+    if num_tasks is not None:
+        tasks = tasks[:num_tasks]
+    return [task.dict() for task in tasks]
