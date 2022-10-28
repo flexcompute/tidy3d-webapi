@@ -60,8 +60,10 @@ def http_interceptor(func):
         # Extend some capabilities of func
         resp = func(*args, **kwargs)
 
-        if resp.raise_for_status():
-            raise resp.raise_for_status
+        if resp.status_code == 404:
+            return None
+
+        resp.raise_for_status()
 
         if not resp.text:
             return None
