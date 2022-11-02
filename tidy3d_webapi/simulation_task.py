@@ -100,29 +100,43 @@ class Tidy3DFolder(Tidy3DResource, Queryable, extra=Extra.allow):
 
 
 class SimulationTask(ResourceLifecycle, Submittable, extra=Extra.allow):
-    """
-    Tidy3D Task
-    """
+    """Interface for managing the running of a :class:`.Simulation` task on server."""
 
-    task_id: Optional[str] = Field(..., alias="taskId")
-    status: Optional[str]
-    created_at: Optional[datetime] = Field(..., alias="createdAt")
+    task_id: Optional[str] = Field(
+        ...,
+        title="task_id",
+        description="Task ID number, set when the task is uploaded, leave as None.",
+        alias="taskId",
+    )
+    status: Optional[str] = Field(title="status", description="Simulation task status.")
+    created_at: Optional[datetime] = Field(title="created_at", alias="createdAt")
 
-    simulation: Optional[Simulation]
+    simulation: Optional[Simulation] = Field(
+        title="simulation", description="Simulation to run as a 'task'."
+    )
 
     folder: Optional[Tidy3DFolder]
 
     @classmethod
     def create(
         cls, simulation: Simulation, task_name: str, folder_name="default", call_back_url=None
-    ):
+    ) -> T:
         """
-        Create a new task.
+        Create a new task on the server.
+
+        Parameters
+        ----------
+        path : str = "./simulation_data.hdf5"
+            Path to download data as ``.hdf5`` file (including filename).
         :param simulation:
         :param task_name:
         :param folder_name:
         :param call_back_url:
-        :return:
+
+        Returns
+        -------
+        :class:`TaskInfo`
+            :class:`TaskInfo` object containing info about status, size, credits of task and others.
         """
         folder = FOLDER_CACHE.get(folder_name)
         if not folder:
@@ -189,7 +203,7 @@ class SimulationTask(ResourceLifecycle, Submittable, extra=Extra.allow):
         assert self.simulation
         upload_string(self.task_id, self.simulation.json(), SIMULATION_JSON)
 
-    def _upload_file(self, local_file: str, remote_filename: str):
+    def upload_file(self, local_file: str, remote_filename: str):
         """
         Upload file to platform.
         :param local_file:

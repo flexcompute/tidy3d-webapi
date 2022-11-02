@@ -18,9 +18,9 @@ class MaterialLibray(Queryable, smart_union=True):
 
     id: str
     name: str
-    medium: Optional[MediumType] = Field(..., alias="calcResult")
-    medium_type: Optional[str] = Field(..., alias="mediumType")
-    json_input: Optional[dict] = Field(..., alias="jsonInput")
+    medium: Optional[MediumType] = Field(alias="calcResult")
+    medium_type: Optional[str] = Field(alias="mediumType")
+    json_input: Optional[dict] = Field(alias="jsonInput")
 
     # pylint: disable=no-self-argument
     @validator("medium", "json_input", pre=True)
