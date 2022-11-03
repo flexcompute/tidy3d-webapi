@@ -3,11 +3,9 @@ import tempfile
 
 import responses
 from responses import matchers
-from tidy3d import Simulation
 
-from tidy3d_webapi import s3_utils
 from tidy3d_webapi.environment import Env
-from tidy3d_webapi.simulation_task import SimulationTask, Tidy3DFolder
+from tidy3d_webapi.simulation_task import Folder, SimulationTask
 
 Env.dev.active()
 
@@ -21,7 +19,7 @@ def test_list_tasks():
         status=200,
     )
 
-    resp = Tidy3DFolder.list()
+    resp = Folder.list()
     assert resp is not None
 
     responses.add(

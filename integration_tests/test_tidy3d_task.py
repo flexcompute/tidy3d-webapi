@@ -5,13 +5,13 @@ import pytest
 from requests import HTTPError
 
 from tidy3d_webapi.environment import Env
-from tidy3d_webapi.simulation_task import SimulationTask, Tidy3DFolder
+from tidy3d_webapi.simulation_task import Folder, SimulationTask
 
 Env.dev.active()
 
 
 def test_list_tasks():
-    resp = Tidy3DFolder.list()
+    resp = Folder.list()
     assert resp is not None
     tasks = resp[0].list_tasks()
     assert tasks is not None
@@ -47,7 +47,7 @@ def test_create():
     task = SimulationTask.create(None, "test task", "test folder2")
     assert task.task_id
     task.delete()
-    Tidy3DFolder.get("test folder2").delete()
+    Folder.get("test folder2").delete()
 
 
 def test_submit():

@@ -5,7 +5,7 @@ import pytest
 from requests import HTTPError
 
 from tidy3d_webapi.environment import Env
-from tidy3d_webapi.simulation_task import SimulationTask, Tidy3DFolder
+from tidy3d_webapi.simulation_task import Folder, SimulationTask
 from tidy3d_webapi.webapi import (
     delete,
     delete_old,
@@ -85,7 +85,7 @@ def test_download_log():
 
 
 def test_delete_old():
-    folder = Tidy3DFolder.create("test delete old")
+    folder = Folder.create("test delete old")
     SimulationTask.create(None, "test case1", folder.folder_name)
     SimulationTask.create(None, "test case2", folder.folder_name)
     SimulationTask.create(None, "test case3", folder.folder_name)
@@ -97,7 +97,7 @@ def test_delete_old():
 
 def test_get_tasks():
     delete_old(-1, "test_get_tasks")
-    folder = Tidy3DFolder.create("test_get_tasks")
+    folder = Folder.create("test_get_tasks")
     task1 = SimulationTask.create(None, "test case1", folder.folder_name)
     task2 = SimulationTask.create(None, "test case2", folder.folder_name)
     task3 = SimulationTask.create(None, "test case3", folder.folder_name)

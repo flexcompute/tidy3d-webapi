@@ -10,7 +10,7 @@ from tidy3d.web.task import TaskId, TaskInfo
 from tidy3d.web.webapi import SIM_FILE_NAME
 from typing_extensions import Literal
 
-from tidy3d_webapi import SimulationTask, Tidy3DFolder
+from tidy3d_webapi import Folder, SimulationTask
 
 
 def upload(  # pylint:disable=too-many-locals,too-many-arguments
@@ -270,7 +270,7 @@ def delete_old(
     int
         Total number of tasks deleted.
     """
-    folder = Tidy3DFolder.get(folder)
+    folder = Folder.get(folder)
     if not folder:
         return 0
     tasks = folder.list_tasks()
@@ -298,7 +298,7 @@ def get_tasks(
     folder: str = "default"
         Folder from which to get the tasks.
     """
-    folder = Tidy3DFolder.get(folder)
+    folder = Folder.get(folder)
     tasks = folder.list_tasks()
     if order == "new":
         tasks = sorted(tasks, key=lambda t: t.created_at, reverse=True)

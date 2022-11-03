@@ -49,11 +49,11 @@ export SIMCLOUD_APIKEY="tidy3d-api-key"
 ## Tidy3d folder
 
 ```python
-from tidy3d_webapi import Tidy3DFolder
+from tidy3d_webapi import Folder
 
 folders = Tidy3dFolder.list()
 default_folder = Tidy3dFolder.get("default")
-new_folder = Tidy3DFolder.create(name="new_folder")
+new_folder = Folder.create(name="new_folder")
 ```
 
 ## Tidy3d Task
@@ -63,7 +63,7 @@ new_folder = Tidy3DFolder.create(name="new_folder")
 ```python
 import os
 import tempfile
-from tidy3d_webapi import Tidy3DFolder, SimulationTask
+from tidy3d_webapi import Folder, SimulationTask
 
 default_folder = Tidy3dFolder.get("default")
 tasks = default_folder.list_tasks()

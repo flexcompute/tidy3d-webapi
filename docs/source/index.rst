@@ -19,5 +19,5 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-
-.. openapi:: openapi.yaml
+.. automodule:: target.usage_automodule
+   :members:

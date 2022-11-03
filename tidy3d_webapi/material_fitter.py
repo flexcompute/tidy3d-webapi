@@ -55,19 +55,28 @@ class MaterialFitterTask(
     Material Fitter Task
     """
 
-    id: str
-    dispersion_fitter: DispersionFitter
-    status: str
-    file_name: str = Field(..., alias="fileName")
-    resource_path: str = Field(..., alias="resourcePath")
+    id: str = Field(title="Task ID", description="Task ID")
+    dispersion_fitter: DispersionFitter = Field(
+        title="Dispersion Fitter", description="Dispersion Fitter data"
+    )
+    status: str = Field(title="Task Status", description="Task Status")
+    file_name: str = Field(
+        ..., title="file name", description="fitter data file name", alias="fileName"
+    )
+    resource_path: str = Field(
+        ..., title="resource path", description="resource path", alias="resourcePath"
+    )
 
     @classmethod
     def submit(cls, fitter: DispersionFitter, options: FitterOptions):
         """
-        Create a new material fitter task
-        :param fitter:
-        :param options:
-        :return:
+        Create and kickoff fitter task.
+        Parameters
+        ----------
+        fitter: DispersionFitter
+            material fitter data.
+        options: FitterOptions
+            fitter options
         """
         assert fitter
         assert options
@@ -97,8 +106,7 @@ class MaterialFitterTask(
 
     def sync_status(self):
         """
-        Sync the status from cloud platform.
-        :return:
+        Sync the status from server and update self.status.
         """
         resp = http.get(f"tidy3d/fitter/{self.id}")
         self.status = resp["status"]
@@ -106,8 +114,15 @@ class MaterialFitterTask(
     def save_to_library(self, name: str) -> bool:
         """
         Save the fitted material to the material library
-        :param name:
-        :return:
+        Parameters
+        ----------
+        name: str
+            The name in material library.
+
+        Returns
+        ---------
+        success: bool
+            True if success, False otherwise.
         """
 
         if self.status != "COMPLETED":
