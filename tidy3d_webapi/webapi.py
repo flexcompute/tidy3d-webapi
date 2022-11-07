@@ -7,7 +7,6 @@ from typing import Dict, List
 import pytz
 from tidy3d import Simulation, SimulationData
 from tidy3d.web.task import TaskId, TaskInfo
-from tidy3d.web.webapi import SIM_FILE_NAME
 from typing_extensions import Literal
 
 from tidy3d_webapi import Folder, SimulationTask
@@ -197,7 +196,7 @@ def estimate_cost(task_id: str) -> float:
     return resp.get("flex_unit") or 0.0
 
 
-def download_json(task_id: TaskId, path: str = SIM_FILE_NAME) -> None:
+def download_json(task_id: TaskId, path: str = "simulation.json") -> None:
     """Download the `.json` file associated with the :class:`.Simulation` of a given task.
 
     Parameters
@@ -213,7 +212,7 @@ def download_json(task_id: TaskId, path: str = SIM_FILE_NAME) -> None:
     task.get_simulation_json(path)
 
 
-def load_simulation(task_id: TaskId, path: str = SIM_FILE_NAME) -> Simulation:
+def load_simulation(task_id: TaskId, path: str = "simulation.json") -> Simulation:
     """Download the `.json` file of a task and load the associated :class:`.Simulation`.
 
     Parameters
