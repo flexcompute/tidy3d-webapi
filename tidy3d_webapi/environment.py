@@ -33,7 +33,6 @@ class EnvironmentConfig(BaseModel):
 dev = EnvironmentConfig(
     name="dev",
     web_api_endpoint="https://tidy3d-api.dev-simulation.cloud",
-    # web_api_endpoint="http://127.0.0.1:5000",
     aws_region="us-east-1",
 )
 
